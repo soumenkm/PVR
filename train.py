@@ -18,7 +18,7 @@ class PVRTrainer:
         self.model_name_srt = self.model_name.split("/")[-1]
 
         self.train_ds = LogicDataset(filepath=self.config["train_dataset_path"], model_name=self.config["model_name"], frac=self.config["train_frac"])
-        self.eval_ds = LogicDataset(filepath=self.config["test_dataset_path"], model_name=self.config["model_name"], frac=self.config["test_frac"])
+        self.eval_ds = LogicDataset(filepath=self.config["test_dataset_path"], model_name=self.config["model_name"], frac=self.config["eval_frac"])
         self.data_collator = DefaultDataCollator(return_tensors="pt")
 
         self.batch_size = self.config["batch_size"]
@@ -147,6 +147,8 @@ def main(device: torch.device) -> None:
         "model_name": "LIAMF-USP/roberta-large-finetuned-race",
         "train_dataset_path": Path(Path.cwd(), "data/depth-5/meta-train.jsonl"),
         "test_dataset_path": Path(Path.cwd(), "data/depth-5/meta-test.jsonl"),
+        "train_frac": 0.01,
+        "eval_frac": 0.01,
         "num_epochs": 10,
         "num_steps": None,
         "batch_size": 16,
